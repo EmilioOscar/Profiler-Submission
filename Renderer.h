@@ -3,7 +3,7 @@
 
 namespace LightweightProfiler::Renderer {
 
-    // Initializes Win32 Window, DirectX 11 Swap Chain, and ImGui/ImPlot contexts
+    // Initialises Win32 Window, DirectX 11 Swap Chain, and ImGui/ImPlot contexts
     bool Initialize(const wchar_t* windowTitle, int width, int height);
 
     // Starts a new ImGui and GPU rendering frame
