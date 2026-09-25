@@ -66,22 +66,21 @@ namespace LightweightProfiler {
     };
 
    
-    // WBS 1.2: Fixed-Size Data Structure (POD) for Macro Engine Telemetry
+    // Fixed-Size Data Structure (POD) for Macro Engine Telemetry
    
     struct TelemetryFrame {
         float frameTimeMs;
         float fps;
-        float cpuUsage;      // Placeholder for WBS 2.2
-        float memoryUsageMb; // Placeholder for WBS 2.2
+        float cpuUsage;      // Placeholder  
+        float memoryUsageMb; // Placeholder 
         float gpuTimeMs;
     };
 
-    // WBS 3.1: Static Buffer Allocation Size
+    // Static Buffer Allocation Size
     constexpr size_t BUFFER_SIZE = 1000;
 
    
-    // WBS 3.1 & 3.2: Lock-Free Sequential Ring Buffer for Frame Telemetry
-   
+    //  Lock-Free Sequential Ring Buffer for Frame Telemetry
     class FrameProfiler {
     public:
         static FrameProfiler& Get() {
@@ -89,7 +88,7 @@ namespace LightweightProfiler {
             return instance;
         }
 
-        // WBS 2.1: Frame-Boundary Hooks
+        // Frame-Boundary Hooks
         void BeginFrame();
         void EndFrame();
 
@@ -101,7 +100,7 @@ namespace LightweightProfiler {
 
         std::array<TelemetryFrame, BUFFER_SIZE> m_FrameHistory{};
         
-        // WBS 3.2: Atomic counter prevents data races if UI reads from another thread
+        // Atomic counter prevents data races if UI reads from another thread
         std::atomic<size_t> m_WriteIndex{0};
 
         // Monotonic clock for accurate frame times
