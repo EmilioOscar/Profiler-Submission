@@ -9,7 +9,7 @@
 namespace LightweightProfiler {
 
     void Dashboard::Draw() {
-        // 1. Persistent Data Buffers 
+        // Persistent Data Buffers 
         static std::vector<double> barPositions, barValues;
         static std::vector<long long> barValuesUs;
         static std::vector<const char*> barLabels;
@@ -20,7 +20,7 @@ namespace LightweightProfiler {
         static std::vector<float> lineRam(BUFFER_SIZE, 0.0f);
         static std::vector<float> lineGpu(BUFFER_SIZE, 0.0f);
 
-        // Added cached variables for Frame Time and GPU Time
+        // cached variables for Frame Time and GPU Time
         static float cachedFps = 0.0f, cachedCpu = 0.0f, cachedRam = 0.0f;
         static float cachedFrameTime = 0.0f, cachedGpuTime = 0.0f; 
 
@@ -30,7 +30,7 @@ namespace LightweightProfiler {
             isInitialized = true;
         }
 
-        //  WBS 4.2: 10Hz UI Throttling Timer 
+        // 10Hz UI Throttling Timer 
         static auto lastUpdateTime = std::chrono::steady_clock::now();
         auto now = std::chrono::steady_clock::now();
         auto elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastUpdateTime).count();
@@ -72,7 +72,7 @@ namespace LightweightProfiler {
         // UI RENDERING
         // Window 1: Micro Scope Diagnostics
 
-        // Add outer padding so it feels cleaner and less cramped
+        // Add outer padding so it feels cleaner and less cramped looks way nicer
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(12, 12));
         ImGui::Begin("Profiler Diagnostic Dashboard");
         ImGui::PopStyleVar(); // Pop immediately so it only affects this window
@@ -87,10 +87,10 @@ namespace LightweightProfiler {
         ImGui::Text("Exact Execution Times (Microsecond Precision):");
         ImGui::Spacing();
 
-        // Kept the classic borders, added Resizable flag for cleanliness
+        // Kept the classic borders, added Resizable flag for cleanliness 
         if (ImGui::BeginTable("ProfileTable", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable)) {
 
-            // Stretch the name column, fix the width of the time columns
+            // Stretch the name column fix the width of the time columns 
             ImGui::TableSetupColumn("Scope Name", ImGuiTableColumnFlags_WidthStretch, 2.0f);
             ImGui::TableSetupColumn("Time (ms)", ImGuiTableColumnFlags_WidthFixed, 100.0f);
             ImGui::TableSetupColumn("Time (us)", ImGuiTableColumnFlags_WidthFixed, 100.0f);
@@ -112,7 +112,7 @@ namespace LightweightProfiler {
         ImGui::Text("Visual Scope Breakdown:");
         ImGui::Spacing();
 
-        // Made the chart significantly BIGGER (Increased height from 200 to 300)
+        // Made the chart significantly BIGGERR (Increased height from 200 to 300)
         if (ImPlot::BeginPlot("Current Frame Execution Times", ImVec2(-1, 300))) {
             ImPlot::SetupAxes("Measured Scopes", "Execution Time (ms)", ImPlotAxisFlags_None, ImPlotAxisFlags_None);
             ImPlot::SetupAxesLimits(-0.75, (double)barLabels.size() - 0.25, 0.0, 18.0, ImGuiCond_Always);
@@ -130,17 +130,17 @@ namespace LightweightProfiler {
         }
         ImGui::SameLine();
         
-        // 0. Expanded Top Text Readout
+        //  Expanded Top Text Readout
         ImGui::Text("Frame: %.2f ms  |  GPU: %.2f ms  |  FPS: %.1f  |  CPU: %.2f%%  |  RAM: %.2f MB", 
                     cachedFrameTime, cachedGpuTime, cachedFps, cachedCpu, cachedRam);
         ImGui::Spacing();
 
-        // 1. Primary Chart (Frame Time)
+        //  The Primary Chart (Frame Time)
         if (ImPlot::BeginPlot("Frame Time History", ImVec2(-1, 250))) {
             ImPlot::SetupAxes("Frames", "Time (ms)", ImPlotAxisFlags_AutoFit, ImPlotAxisFlags_None);
             ImPlot::SetupAxisLimits(ImAxis_Y1, 0.0, 33.3, ImGuiCond_Always);
 
-            // Styling: Create a spec and pass it to PlotLine
+            // Styling: Create a spec and pass it to PlotLine clean ui
             ImPlotSpec frameSpec;
             frameSpec.LineColor = ImVec4(0.2f, 0.8f, 1.0f, 1.0f); // Cyan
             ImPlot::PlotLine("Total Frame Time (ms)", lineFrameTimes.data(), (int)lineFrameTimes.size(), 1.0, 0.0, frameSpec);
@@ -158,7 +158,7 @@ namespace LightweightProfiler {
             ImPlot::EndPlot();
         }
 
-        // 2. Secondary Chart (FPS Stability)
+        // the Secondary Chart (FPS Stability)
         if (ImPlot::BeginPlot("FPS Stability", ImVec2(-1, 200))) {
             ImPlot::SetupAxes("Frames", "FPS", ImPlotAxisFlags_AutoFit, ImPlotAxisFlags_None);
             ImPlot::SetupAxisLimits(ImAxis_Y1, 0.0, 150.0, ImGuiCond_Once); // allows for bigger sizing
@@ -172,7 +172,7 @@ namespace LightweightProfiler {
             ImPlot::EndPlot();
         }
 
-        // 3. Tertiary Chart (CPU Load)
+        // the Tertiary Chart (CPU Load)
         if (ImPlot::BeginPlot("CPU Load", ImVec2(-1, 200))) {
             ImPlot::SetupAxes("Frames", "CPU (%)", ImPlotAxisFlags_AutoFit, ImPlotAxisFlags_None);
             ImPlot::SetupAxisLimits(ImAxis_Y1, 0.0, 100.0, ImGuiCond_Always);
@@ -184,7 +184,7 @@ namespace LightweightProfiler {
             ImPlot::EndPlot();
         }
 
-        // 4. Quaternary Chart (RAM Footprint)
+        // the Quaternary Chart (RAM Footprint)
         if (ImPlot::BeginPlot("Memory Footprint", ImVec2(-1, 200))) {
             ImPlot::SetupAxes("Frames", "RAM (MB)", ImPlotAxisFlags_AutoFit, ImPlotAxisFlags_None);
             ImPlot::SetupAxisLimits(ImAxis_Y1, 0.0, 200.0, ImGuiCond_Always);
