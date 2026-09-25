@@ -8,7 +8,7 @@
 void SimulateMathWork() { 
     PROFILER_SCOPE("SimulateMathWork"); // Only uses stack-based math
     
-    // Randomize the workload between 20,000 and 80,000 iterations
+    // Randomise the workload between 20,000 and 80,000 iterations
     int dynamicLoad = 20000 + (std::rand() % 60000); 
     
     volatile double sum = 0;
@@ -26,20 +26,20 @@ void SimulatePhysicsStep() {
 }
 
 int main() {
-    // 1. Initialize Backend
+    // 1. Initialise Backend
     if (!LightweightProfiler::Renderer::Initialize(L"Lightweight C++ Profiler - Academic Benchmarking", 1280, 850)) {
         return 1;
     }
     
-    // Initialize OS Polling (Required for baseline CPU tracking)
+    // Initialise OS Polling (Required for baseline CPU tracking)
     LightweightProfiler::OSMetrics::Initialize();
 
-    // 2. Main Game/App Loop
+    //  Main Game/App Loop
     while (LightweightProfiler::Renderer::IsRunning()) {
 
         LightweightProfiler::FrameProfiler::Get().BeginFrame();
 
-        //  A. Execute Game Engine Logic //
+        //  Execute Game Engine Logic //
         LightweightProfiler::Instrumentor::Get().Clear();
         {
             // Added the [Root] tag
@@ -48,7 +48,7 @@ int main() {
             SimulatePhysicsStep();
         }
 
-        // B. Render Presentation Layer //
+        // Renders Presentation Layer //
         LightweightProfiler::Renderer::BeginFrame();
 
         // One clean function that calls and handles all UI
@@ -57,7 +57,7 @@ int main() {
         LightweightProfiler::FrameProfiler::Get().EndFrame();
     }
 
-    // 3. Shutdown the application down
+    //  Shutdown the application down
     LightweightProfiler::Renderer::Shutdown();
     return 0;
 }
