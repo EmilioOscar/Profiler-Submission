@@ -12,14 +12,14 @@ namespace LightweightProfiler {
             return;
         }
 
-        // 1. Write the CSV Column Headers
+        // Writes the CSV Column Headers
         file << "Frame Index,Total Frame Time (ms),Deduced GPU Time (ms),FPS,CPU Usage (%),RAM (MB)\n";
 
-        // 2. Fetch the Ring Buffer Snapshot
+        // Fetches the Ring Buffer Snapshot
         const auto& history = FrameProfiler::Get().GetHistory();
         size_t writeIndex = FrameProfiler::Get().GetWriteIndex();
 
-        // 3. Unwrap the circular buffer from Oldest (0) to Newest (999)
+        // Unwraps the circular buffer from Oldest (0) to Newest (999)
         for (size_t i = 0; i < BUFFER_SIZE; ++i) {
             size_t circularIndex = (writeIndex + i) % BUFFER_SIZE;
             const auto& frame = history[circularIndex];
