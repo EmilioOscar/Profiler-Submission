@@ -1,0 +1,20 @@
+# Visual Studio build output and cache
+.vs/
+*.user
+*.aps
+*.opendb
+*.dbx
+*.log
+*.tlog
+
+# Build folders
+x64/
+x86/
+Debug/
+Release/
+bin/
+build/
+*.obj
+*.exe
+*.pdb
+*.ilk
