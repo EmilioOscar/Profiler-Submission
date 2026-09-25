@@ -25,6 +25,23 @@ void SimulatePhysicsStep() {
     std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
 }
 
+// Static test functions:
+// Uncomment these (and comment out the random fuctions) if you want a steady, 
+// predictable workload to test profiler overhead without frame spikes.
+/*
+void SimulateMathWork() {
+    PROFILER_SCOPE("SimulateMathWork");
+    volatile double sum = 0;
+    for (int i = 0; i < 50000; ++i) {
+        sum += i * 0.001;
+    }
+}  
+void SimulatePhysicsStep() {
+    PROFILER_SCOPE("Physics::StepSimulation");
+    std::this_thread::sleep_for(std::chrono::milliseconds(8));
+}
+*/
+
 int main() {
     // 1. Initialise Backend
     if (!LightweightProfiler::Renderer::Initialize(L"Lightweight C++ Profiler - Academic Benchmarking", 1280, 850)) {
